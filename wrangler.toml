@@ -1,0 +1,9 @@
+# Cloudflare Pages 設定：Git 連動部署時會自動讀取這個檔案。
+name = "hikarunoziwei-notes"
+pages_build_output_dir = "./dist"
+compatibility_date = "2026-09-01"
+
+# 瀏覽次數存在 KV，由 functions/api/views/ 讀寫
+[[kv_namespaces]]
+binding = "VIEWS"
+id = "73b61eeaf04a4793bf8a2e53937635cd"

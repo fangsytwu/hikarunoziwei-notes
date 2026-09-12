@@ -1,0 +1,162 @@
+---
+import Base from '../layouts/Base.astro';
+import { getPosts } from '../lib/posts';
+import { formatDate } from '../lib/dates';
+
+// 文章列表在建置時就寫死進 HTML，不需要前端 JavaScript 讀 JSON。
+const posts = await getPosts();
+const slugs = posts.map((p) => p.id);
+---
+
+<Base title="阿光的紫微斗數筆記" description="阿光（ひかる）的紫微斗數學習筆記：命盤、十四主星、十二宮位與四化的整理與心得。">
+  <section class="hero">
+    <img
+      src="/hero.jpg"
+      width="1920"
+      height="912"
+      alt="智利帕瑞納天文台上方的銀河與夜空"
+      fetchpriority="high"
+    />
+    <div class="hero-text">
+      <h1>阿光的紫微斗數筆記</h1>
+      <p>把星曜落在宮位裡的道理，一篇一篇慢慢寫下來。</p>
+    </div>
+  </section>
+
+  <section class="list" aria-labelledby="latest">
+    <h2 id="latest">文章</h2>
+    {posts.length === 0 && <p>還沒有文章，敬請期待。</p>}
+    <ul class="cards">
+      {
+        posts.map((post) => (
+          <li class="card">
+            <a class="card-link" href={`/${post.id}/`}>
+              {post.data.image && (
+                <img class="card-img" src={post.data.image} alt={post.data.imageAlt ?? ''} loading="lazy" />
+              )}
+              <div class="card-body">
+                <h3>{post.data.title}</h3>
+                <p class="desc">{post.data.description}</p>
+                <div class="meta">
+                  <span>{post.data.author}</span>
+                  <time datetime={post.data.pubDate.toISOString()}>發布 {formatDate(post.data.pubDate)}</time>
+                  <time datetime={post.updated.toISOString()}>更新 {formatDate(post.updated)}</time>
+                  <span class="views" data-views={post.id}>–</span>
+                </div>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <script define:vars={{ slugs }}>
+    // 只用來補上瀏覽次數；列表本身已是靜態 HTML。
+    if (slugs.length) {
+      fetch(`/api/views?slugs=${encodeURIComponent(slugs.join(','))}`)
+        .then((r) => (r.ok ? r.json() : {}))
+        .then((counts) => {
+          document.querySelectorAll('[data-views]').forEach((el) => {
+            const n = counts[el.dataset.views];
+            if (typeof n === 'number') el.textContent = n.toLocaleString('zh-TW');
+          });
+        })
+        .catch(() => {});
+    }
+  </script>
+</Base>
+
+<style>
+  .hero {
+    position: relative;
+    margin: 1.2rem 0 2.2rem;
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 60px -30px #000;
+  }
+  .hero img {
+    width: 100%;
+    aspect-ratio: 1920 / 912;
+    object-fit: cover;
+  }
+  .hero-text {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 2.5rem 1.2rem 1.2rem;
+    background: linear-gradient(to top, #0f0b1ee6 0%, #0f0b1e80 60%, transparent 100%);
+  }
+  .hero-text h1 {
+    margin: 0 0 0.2em;
+    text-shadow: 0 2px 12px #000;
+  }
+  .hero-text p {
+    margin: 0;
+    color: var(--text);
+    text-shadow: 0 1px 8px #000;
+  }
+  /* 手機：圖比較矮，文字改放圖片下方避免擠壓 */
+  @media (max-width: 560px) {
+    .hero img {
+      aspect-ratio: 16 / 9;
+    }
+    .hero-text {
+      position: static;
+      padding: 1rem 1rem 1.1rem;
+      background: var(--bg-elev);
+    }
+    .hero-text h1 {
+      font-size: 1.45rem;
+    }
+    .hero-text p {
+      font-size: 0.95rem;
+    }
+  }
+
+  .list h2 {
+    margin-top: 0;
+  }
+  .cards {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 1rem;
+  }
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 0.9rem;
+    overflow: hidden;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+  }
+  .card-link {
+    display: block;
+    color: inherit;
+  }
+  .card-link:hover {
+    text-decoration: none;
+  }
+  .card-img {
+    width: 100%;
+    aspect-ratio: 16 / 7;
+    object-fit: cover;
+  }
+  .card-body {
+    padding: 1rem 1.1rem 1.1rem;
+  }
+  .card h3 {
+    margin: 0 0 0.4em;
+    font-size: 1.2rem;
+  }
+  .desc {
+    margin: 0 0 0.8em;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+</style>

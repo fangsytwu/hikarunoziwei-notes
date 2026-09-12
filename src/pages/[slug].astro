@@ -1,0 +1,120 @@
+---
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { getPosts } from '../lib/posts';
+import { formatDate } from '../lib/dates';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const { title, description, author, pubDate, image, imageAlt, imageCredit, tags } = post.data;
+const isUpdated = post.updated.getTime() - pubDate.getTime() > 60 * 1000;
+---
+
+<Base title={title} description={description} type="article">
+  <article class="post">
+    <header class="post-head">
+      <h1>{title}</h1>
+      <div class="meta">
+        <span>作者：{author}</span>
+        <time datetime={pubDate.toISOString()}>發布 {formatDate(pubDate)}</time>
+        {isUpdated && <time datetime={post.updated.toISOString()}>更新 {formatDate(post.updated)}</time>}
+        <span class="views" data-views={post.id}>–</span>
+      </div>
+      {
+        image && (
+          <figure class="post-hero">
+            <img src={image} alt={imageAlt ?? ''} />
+            {imageCredit && <figcaption set:html={imageCredit} />}
+          </figure>
+        )
+      }
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    {
+      tags.length > 0 && (
+        <p class="tags">
+          {tags.map((t) => (
+            <span class="tag">#{t}</span>
+          ))}
+        </p>
+      )
+    }
+
+    <p class="back"><a href="/">← 回到文章列表</a></p>
+  </article>
+
+  <script define:vars={{ slug: post.id }}>
+    // 進站即 +1，並顯示目前總數。
+    fetch(`/api/views/${encodeURIComponent(slug)}`, { method: 'POST' })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (d && typeof d.count === 'number') {
+          document.querySelectorAll('[data-views]').forEach((el) => {
+            el.textContent = d.count.toLocaleString('zh-TW');
+          });
+        }
+      })
+      .catch(() => {});
+  </script>
+</Base>
+
+<style>
+  .post {
+    padding-top: 1.5rem;
+  }
+  .post-head h1 {
+    margin: 0 0 0.5em;
+  }
+  /* 文章大圖：等比例縮放，最寬不超過內文寬度 */
+  .post-hero {
+    margin: 1.4rem 0 0;
+  }
+  .post-hero img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.8rem;
+    border: 1px solid var(--border);
+  }
+  .post-hero figcaption {
+    margin-top: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+  .prose {
+    margin-top: 1.5rem;
+  }
+  .prose :global(h2:first-child) {
+    margin-top: 1em;
+  }
+  .prose :global(img) {
+    border-radius: 0.6rem;
+    margin: 1.2em auto;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 2rem 0 0;
+  }
+  .tag {
+    font-size: 0.85rem;
+    color: var(--accent);
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.1em 0.7em;
+  }
+  .back {
+    margin-top: 2.5rem;
+  }
+</style>

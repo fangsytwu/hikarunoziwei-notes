@@ -35,22 +35,22 @@ tags: [小遊戲, 教育]
 
 <a class="link-card" href="https://claude.ai/artifact/AWwoUVfR7KFTQd7ateyNfb" target="_blank" rel="noopener">
   <span class="link-card-media is-full">
-    <img src="/images/game-counseling-room.jpg" width="1179" height="1318" alt="遊戲畫面：GAME 02 輔導室：今天也不能倒下" loading="lazy" />
+    <img src="/images/game-home-smiling-rat.jpg" width="1179" height="1991" alt="遊戲首頁：今天也要平安下班，以及 GAME 01 笑鼠會議" loading="lazy" />
   </span>
   <span class="link-card-body">
-    <span class="link-card-title">輔導室：今天也不能倒下</span>
-    <span class="link-card-desc">GAME 02｜你是國中唯一的專任輔導老師，從早自習撐到放學</span>
+    <span class="link-card-title">今天也要平安下班</span>
+    <span class="link-card-desc">遊戲首頁｜另一款 GAME 01「笑鼠會議」也在這裡</span>
     <span class="link-card-host">claude.ai</span>
   </span>
 </a>
 
 <a class="link-card" href="https://claude.ai/artifact/AWwoUVfR7KFTQd7ateyNfb" target="_blank" rel="noopener">
   <span class="link-card-media is-full">
-    <img src="/images/game-home-smiling-rat.jpg" width="1179" height="1991" alt="遊戲首頁：今天也要平安下班，以及 GAME 01 笑鼠會議" loading="lazy" />
+    <img src="/images/game-counseling-room.jpg" width="1179" height="1318" alt="遊戲畫面：GAME 02 輔導室：今天也不能倒下" loading="lazy" />
   </span>
   <span class="link-card-body">
-    <span class="link-card-title">今天也要平安下班</span>
-    <span class="link-card-desc">遊戲首頁｜另一款 GAME 01「笑鼠會議」也在這裡</span>
+    <span class="link-card-title">輔導室：今天也不能倒下</span>
+    <span class="link-card-desc">GAME 02｜你是國中唯一的專任輔導老師，從早自習撐到放學</span>
     <span class="link-card-host">claude.ai</span>
   </span>
 </a>

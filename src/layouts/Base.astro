@@ -299,6 +299,14 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     border-color: var(--accent);
     text-decoration: none;
   }
+  /* 純圖說卡片（不是連結）：沿用 .link-card 外觀，但沒有 hover 效果 */
+  figure.link-card {
+    margin: 1.6em 0;
+  }
+  figure.link-card:hover {
+    transform: none;
+    border-color: var(--border);
+  }
   .link-card-media {
     position: relative;
     display: block;

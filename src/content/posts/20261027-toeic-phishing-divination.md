@@ -12,10 +12,10 @@ tags: [抽牌紀錄, 防詐]
 
 <figure class="link-card">
   <span class="link-card-media is-full">
-    <img src="/images/toeic-01-cards.jpg" width="2000" height="1208" alt="三張紫微斗數牌卡：太陽×天梁、天魁、胎（倒）" loading="lazy" />
+    <img src="/images/toeic-01-cards.jpg" width="2000" height="1208" alt="三張紫微斗數牌卡：太陽天梁、天魁、胎（倒）" loading="lazy" />
   </span>
   <figcaption class="link-card-body">
-    <span class="link-card-desc">抽牌結果：太陽 × 天梁（正）、天魁（正）、胎（倒）</span>
+    <span class="link-card-desc">抽牌結果：太陽天梁（正）、天魁（正）、胎（倒）</span>
   </figcaption>
 </figure>
 

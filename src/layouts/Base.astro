@@ -345,6 +345,15 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     border-width: 0.55rem 0 0.55rem 0.95rem;
     border-color: transparent transparent transparent #fff;
   }
+  /* 直式截圖預覽：依原比例完整顯示，不裁切 */
+  .link-card-media.is-full {
+    aspect-ratio: auto;
+    background: var(--bg-elev);
+  }
+  .link-card-media.is-full img {
+    height: auto;
+    object-fit: contain;
+  }
   .link-card-body {
     display: block;
     padding: 0.9rem 1.1rem 1rem;

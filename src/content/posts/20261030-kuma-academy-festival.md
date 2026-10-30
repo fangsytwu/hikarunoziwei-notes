@@ -8,6 +8,8 @@ tags: [活動推廣, 民防, 黑熊學院]
 
 ## 官網活動連結
 
+<https://kuma-academy.org/article/359>
+
 <a class="link-card" href="https://kuma-academy.org/article/359" target="_blank" rel="noopener">
   <span class="link-card-media is-full">
     <img src="/images/kuma-01-festival.webp" width="716" height="712" alt="黑熊森遊會活動資訊圖：園區地圖、交通方式、萬聖限定變裝攤位與熊熊塗鴉休息區" loading="lazy" />
